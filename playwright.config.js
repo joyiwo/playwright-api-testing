@@ -21,7 +21,16 @@ module.exports = defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    // 1. Tampilkan hasil dalam format daftar di terminal
+    ['list'],
+
+    // 2. Simpan output dalam file JSON
+    ['json', { outputFile: 'test-results/output.json' }],
+
+    // 3. Hasilkan laporan HTML dalam folder tertentu
+    ['html', { outputFolder: 'test-results/html-report', open: 'never' }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
